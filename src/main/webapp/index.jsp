@@ -1,6 +1,7 @@
 <%@ include file="header.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page %>
+<%@ page import="org.javarush.apostol.jr_module3.util.WebConstants" %>
+<%@ page language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,8 +26,9 @@
         .intro {
             margin-bottom: 30px;
         }
-        .form {
+        .form, .start-game {
             text-align: center;
+            margin-bottom: 20px;
         }
         button {
             background-color: #ffcc00;
@@ -35,9 +37,16 @@
             font-size: 16px;
             cursor: pointer;
             border-radius: 5px;
+            margin: 5px;
         }
         button:hover {
             background-color: #ffaa00;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -56,8 +65,9 @@
         <p>— В инженерном отсеке работает командир Монтгомери Скотт, наш главный инженер. За тактическую сторону отвечает лейтенант Хикару Сулу, а наш медицинский офицер — доктор Леонард Маккой.</p>
         <p>Как мы можем обращаться к вам, капитан?</p>
     </div>
-    <div class="form">
-        <form action="${pageContext.request.contextPath}/game" method="get">
+    <div class="start-game">
+        <form action="${pageContext.request.contextPath}${WebConstants.GAME}" method="get">
+            <input type="text" name="playerName" placeholder="Введите ваше имя" required />
             <button type="submit">Начать игру</button>
         </form>
     </div>

@@ -1,6 +1,5 @@
 <%@ include file="header.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="org.javarush.apostol.jr_module3.util.WebConstants" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -41,10 +40,10 @@
 </head>
 <body>
 <div class="content">
-    <h1>${question}</h1>
     <c:choose>
-        <c:when test="${not empty options}">
-            <form action="${pageContext.request.contextPath}${WebConstants.GAME}" method="post">
+        <c:when test="${not empty question}">
+            <h1>${question}</h1>
+            <form action="game" method="post">
                 <c:forEach var="option" items="${options}">
                     <input type="radio" name="answer" value="${option.key}" />${option.key}<br/>
                 </c:forEach>
@@ -53,12 +52,11 @@
         </c:when>
         <c:otherwise>
             <h2>${end}</h2>
-            <form action="${pageContext.request.contextPath}${WebConstants.GAME}" method="get">
+            <form action="game" method="get">
                 <button type="submit">Начать заново</button>
             </form>
         </c:otherwise>
     </c:choose>
 </div>
-<%@ include file="footer.jsp" %>
 </body>
 </html>
