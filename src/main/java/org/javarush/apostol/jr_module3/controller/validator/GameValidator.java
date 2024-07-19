@@ -1,17 +1,16 @@
 package org.javarush.apostol.jr_module3.controller.validator;
 
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.javarush.apostol.jr_module3.model.GameState;
-
 import java.util.Map;
+
+@Getter
 @Log4j2
 public class GameValidator {
+    private static GameValidator instance = new GameValidator();
 
-    private static GameValidator instance;
-
-    public GameValidator() {
-        log.info("new GameValidator");
-    }
+    private GameValidator() {}
 
     public static synchronized GameValidator getInstance() {
         if (instance == null) {

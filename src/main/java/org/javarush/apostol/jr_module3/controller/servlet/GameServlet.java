@@ -1,7 +1,6 @@
 package org.javarush.apostol.jr_module3.controller.servlet;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,29 +9,25 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
+import org.javarush.apostol.jr_module3.controller.service.QuestionService;
+import org.javarush.apostol.jr_module3.controller.validator.GameValidator;
 import org.javarush.apostol.jr_module3.model.GameState;
 import org.javarush.apostol.jr_module3.model.GameStep;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
-
-
 import static org.javarush.apostol.jr_module3.util.WebConstants.*;
+
+
 @Log4j2
 @WebServlet(GAME)
 public class GameServlet extends HttpServlet {
-    private Map<String, GameStep> gameLogic;
+    private GameValidator gameValidator;
+    private QuestionService questionService;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream("game_logic.json")) {
-            ObjectMapper mapper = new ObjectMapper();
-            gameLogic = mapper.readValue(input, new TypeReference<>() {
-            });
-        } catch (IOException e) {
-            log.error("Unable to load game logic", e);
-            throw new ServletException("Unable to load game logic", e);
-        }
+    public void init(ServletConfig config) {
+        gameValidator = GameValidator.getInstance();
+        questionService = QuestionService.getInstance();
     }
 
     @Override
@@ -40,12 +35,11 @@ public class GameServlet extends HttpServlet {
         HttpSession session = request.getSession();
         GameState gameState = getOrCreateGameState(session);
 
-        String playerName = request.getParameter("playerName");
-        if (playerName != null && !playerName.trim().isEmpty()) {
-            session.setAttribute("playerName", playerName);
+        if (!setPlayerNameIfNeeded(request, response, session)) {
+            return;
         }
 
-        GameStep stepData = gameLogic.get(gameState.getCurrentStep());
+        GameStep stepData = questionService.getStep(gameState.getCurrentStep());
         setGameStepAttributes(request, stepData);
 
         request.getRequestDispatcher("/game.jsp").forward(request, response);
@@ -57,9 +51,10 @@ public class GameServlet extends HttpServlet {
         HttpSession session = request.getSession();
         GameState gameState = getOrCreateGameState(session);
 
-        GameStep stepData = gameLogic.get(gameState.getCurrentStep());
-        if (stepData.getOptions() != null && stepData.getOptions().containsKey(answer)) {
-            gameState.setCurrentStep(stepData.getOptions().get(answer));
+        Map<String, String> stepOptions = questionService.getOptions(gameState.getCurrentStep());
+
+        if (stepOptions != null && stepOptions.containsKey(answer)) {
+            gameState.setCurrentStep(stepOptions.get(answer));
         } else {
             gameState.reset();
         }
@@ -74,6 +69,20 @@ public class GameServlet extends HttpServlet {
             session.setAttribute("gameState", gameState);
         }
         return gameState;
+    }
+
+    private boolean setPlayerNameIfNeeded(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+        String playerName = (String) session.getAttribute("playerName");
+        if (playerName == null) {
+            playerName = request.getParameter("playerName");
+            if (playerName != null && !playerName.trim().isEmpty()) {
+                session.setAttribute("playerName", playerName);
+            } else {
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
+                return false;
+            }
+        }
+        return true;
     }
 
     private static void setGameStepAttributes(HttpServletRequest request, GameStep stepData) {

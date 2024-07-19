@@ -1,45 +1,53 @@
 {
-  "start": {
-    "question": "Ты потерял память. Принять вызов НЛО?",
-    "options": {
+  "steps": {
+    "start": {
+      "question": "Ты потерял память. Принять вызов НЛО?",
+      "options": ["acceptChallenge", "declineChallenge"]
+    },
+    "acceptChallenge": {
+      "question": "Ты принял вызов. Поднимешься на мостик к капитану?",
+      "options": ["goToBridge", "refuseBridge"]
+    },
+    "declineChallenge": {
+      "end": "Ты отклонил вызов. Поражение."
+    },
+    "goToBridge": {
+      "question": "Ты поднялся на мостик. Ты кто?",
+      "options": ["tellTruth", "lieAboutSelf"]
+    },
+    "refuseBridge": {
+      "end": "Ты не пошел на переговоры. Поражение."
+    },
+    "tellTruth": {
+      "question": "Тебя вернули домой. Но что дальше?",
+      "options": ["rememberPast", "startNewLife"]
+    },
+    "lieAboutSelf": {
+      "end": "Твою ложь разоблачили. Поражение."
+    },
+    "rememberPast": {
+      "end": "Ты вспомнил свое прошлое и вернулся к своей прежней жизни. Поражение."
+    },
+    "startNewLife": {
+      "end": "Ты начал новую жизнь, свободную от прошлого. Победа."
+    }
+  },
+  "options": {
+    "start": {
       "Принять вызов": "acceptChallenge",
       "Отклонить вызов": "declineChallenge"
-    }
-  },
-  "acceptChallenge": {
-    "question": "Ты принял вызов. Поднимешься на мостик к капитану?",
-    "options": {
+    },
+    "acceptChallenge": {
       "Подняться на мостик": "goToBridge",
       "Отказаться подниматься на мостик": "refuseBridge"
-    }
-  },
-  "declineChallenge": {
-    "end": "Ты отклонил вызов. Поражение."
-  },
-  "goToBridge": {
-    "question": "Ты поднялся на мостик. Ты кто?",
-    "options": {
+    },
+    "goToBridge": {
       "Рассказать правду о себе": "tellTruth",
       "Солгать о себе": "lieAboutSelf"
-    }
-  },
-  "refuseBridge": {
-    "end": "Ты не пошел на переговоры. Поражение."
-  },
-  "tellTruth": {
-    "question": "Тебя вернули домой. Но что дальше?",
-    "options": {
+    },
+    "tellTruth": {
       "Попытаться вспомнить прошлое": "rememberPast",
       "Начать новую жизнь": "startNewLife"
     }
-  },
-  "lieAboutSelf": {
-    "end": "Твою ложь разоблачили. Поражение."
-  },
-  "rememberPast": {
-    "end": "Ты вспомнил свое прошлое и вернулся к своей прежней жизни. Поражение."
-  },
-  "startNewLife": {
-    "end": "Ты начал новую жизнь, свободную от прошлого. Победа."
   }
 }

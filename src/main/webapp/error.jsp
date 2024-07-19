@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,43 +6,29 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            color: #333;
-            text-align: center;
-            padding: 50px;
-        }
-        .error-container {
+            margin: 20px;
             background-color: #fff;
+            color: #000;
+        }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f2dede;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            max-width: 600px;
-            margin: auto;
-        }
-        h1 {
-            color: #e74c3c;
-        }
-        p {
-            margin: 10px 0;
+            color: #a94442;
         }
         a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
+            color: #337ab7;
         }
     </style>
 </head>
 <body>
-<div class="error-container">
+<div class="content">
     <h1>An error occurred</h1>
-    <p>Status Code: <c:out value="${pageContext.request.getAttribute('javax.servlet.error.status_code')}" /></p>
-    <p>Servlet Name: <c:out value="${pageContext.request.getAttribute('javax.servlet.error.servlet_name')}" /></p>
-    <p>Request URI: <c:out value="${pageContext.request.getAttribute('javax.servlet.error.request_uri')}" /></p>
-    <c:if test="${pageContext.request.getAttribute('javax.servlet.error.exception') != null}">
-        <p>Exception: <c:out value="${pageContext.request.getAttribute('javax.servlet.error.exception')}" /></p>
-    </c:if>
+    <p>Status Code: ${statusCode}</p>
+    <p>Servlet Name: ${servletName}</p>
+    <p>Request URI: ${requestUri}</p>
     <a href="${pageContext.request.contextPath}/index.jsp">Go back to the main page</a>
 </div>
 </body>

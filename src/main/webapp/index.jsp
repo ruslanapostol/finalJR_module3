@@ -1,54 +1,11 @@
 <%@ include file="header.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="org.javarush.apostol.jr_module3.util.WebConstants" %>
-<%@ page language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Star Trek Adventure Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #000;
-            color: #fff;
-        }
-        h1, h2 {
-            text-align: center;
-        }
-        .content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #333;
-            border-radius: 10px;
-        }
-        .intro {
-            margin-bottom: 30px;
-        }
-        .form, .start-game {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        button {
-            background-color: #ffcc00;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin: 5px;
-        }
-        button:hover {
-            background-color: #ffaa00;
-        }
-        input[type="text"] {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            margin-right: 10px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/main.css">
 </head>
 <body>
 <div class="content">
@@ -67,7 +24,9 @@
     </div>
     <div class="start-game">
         <form action="${pageContext.request.contextPath}${WebConstants.GAME}" method="get">
-            <input type="text" name="playerName" placeholder="Введите ваше имя" required />
+            <label>
+                <input type="text" name="playerName" placeholder="Введите ваше имя" required />
+            </label>
             <button type="submit">Начать игру</button>
         </form>
     </div>

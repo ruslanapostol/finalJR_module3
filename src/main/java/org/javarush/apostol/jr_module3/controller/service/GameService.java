@@ -19,6 +19,11 @@ public class GameService {
     }
 
     public GameState createGameState() {
+        log.info("Creating new GameState");
         return new GameState();
+    }
+
+    public void logGameState(GameState gameState) {
+        log.debug("Current game state: {}", gameState);
     }
 }

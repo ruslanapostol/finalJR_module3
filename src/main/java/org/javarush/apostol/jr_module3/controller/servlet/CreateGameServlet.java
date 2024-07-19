@@ -10,8 +10,8 @@ import org.javarush.apostol.jr_module3.controller.service.GameService;
 import org.javarush.apostol.jr_module3.model.GameState;
 
 import java.io.IOException;
-import static org.javarush.apostol.jr_module3.util.WebConstants.*;
 
+import static org.javarush.apostol.jr_module3.util.WebConstants.*;
 
 @Log4j2
 @WebServlet(CREATE_GAME)
@@ -25,13 +25,13 @@ public class CreateGameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/createGame.jsp").forward(req, resp);
+        req.getRequestDispatcher(CREATE_GAME).forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         GameState gameState = gameService.createGameState();
-        req.getSession().setAttribute("gameState", gameState);
+        req.getSession().setAttribute(GAME_STATE, gameState);
         resp.sendRedirect(GAME);
     }
 }

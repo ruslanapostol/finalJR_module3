@@ -5,47 +5,16 @@
 <html>
 <head>
     <title>Star Trek Adventure Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #000;
-            color: #fff;
-        }
-        h1, h2 {
-            text-align: center;
-        }
-        .content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #333;
-            border-radius: 10px;
-        }
-        .form {
-            text-align: center;
-        }
-        button {
-            background-color: #ffcc00;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        button:hover {
-            background-color: #ffaa00;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/main.css">
 </head>
 <body>
 <div class="content">
+    <h1>${question}</h1>
     <c:choose>
-        <c:when test="${not empty question}">
-            <h1>${question}</h1>
+        <c:when test="${not empty options}">
             <form action="game" method="post">
                 <c:forEach var="option" items="${options}">
-                    <input type="radio" name="answer" value="${option.key}" />${option.key}<br/>
+                    <input type="radio" name="answer" value="${option.key}" />${option.value}<br/>
                 </c:forEach>
                 <button type="submit">Ответить</button>
             </form>
@@ -58,5 +27,6 @@
         </c:otherwise>
     </c:choose>
 </div>
+<%@ include file="footer.jsp" %>
 </body>
 </html>
