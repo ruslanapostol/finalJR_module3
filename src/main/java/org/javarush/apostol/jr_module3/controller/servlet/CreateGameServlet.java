@@ -25,11 +25,11 @@ public class CreateGameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher(CREATE_GAME).forward(req, resp);
+        req.getRequestDispatcher(CREATE_GAME_JSP).forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         GameState gameState = gameService.createGameState();
         req.getSession().setAttribute(GAME_STATE, gameState);
         resp.sendRedirect(GAME);

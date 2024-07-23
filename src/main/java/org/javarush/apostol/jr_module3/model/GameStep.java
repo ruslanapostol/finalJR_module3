@@ -7,6 +7,7 @@ import java.util.Map;
 @Getter
 @Setter
 public class GameStep {
+    private String id;
     private String question;
     private Map<String, String> options;
     private String end;
