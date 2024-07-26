@@ -2,7 +2,6 @@ package org.javarush.apostol.jr_module3.controller.validator;
 
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
-import org.javarush.apostol.jr_module3.model.GameState;
 import java.util.Map;
 
 @Getter
@@ -23,7 +22,4 @@ public class GameValidator {
         return options != null && options.containsKey(answer);
     }
 
-    public boolean isValidGameState(GameState gameState) {
-        return gameState != null && gameState.getCurrentStep() != null;
-    }
 }

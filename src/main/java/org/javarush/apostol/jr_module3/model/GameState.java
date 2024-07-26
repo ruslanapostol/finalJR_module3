@@ -15,12 +15,4 @@ public class GameState implements Serializable {
         this.currentStep = "start";
         this.gameEnded = false;
     }
-
-    public void win() {
-        this.gameEnded = true;
-    }
-
-    public void lose() {
-        this.gameEnded = true;
-    }
 }
