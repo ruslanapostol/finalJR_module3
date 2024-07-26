@@ -13,6 +13,7 @@ import org.javarush.apostol.jr_module3.model.GameStep;
 import org.javarush.apostol.jr_module3.util.PlayerUtils;
 
 import java.io.IOException;
+
 import static org.javarush.apostol.jr_module3.util.WebConstants.*;
 
 
@@ -34,13 +35,11 @@ public class GameServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
 
-            if (!PlayerUtils.ensurePlayerName(request, response, session)) {
-                return;
-            }
+            if (checkIfPlayerNameIsSet(request, response, session)) return;
 
             GameState gameState = gameService.getOrCreateGameState(session);
-            GameStep stepData = gameLogicService.getStep(gameState.getCurrentStep());
-            setGameStepAttributes(request, stepData);
+            GameStep currentStep = gameLogicService.getStep(gameState.getCurrentStep());
+            setGameStepAttributes(request, currentStep);
 
             request.getRequestDispatcher(GAME_JSP).forward(request, response);
         } catch (Exception e) {
@@ -53,13 +52,19 @@ public class GameServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            String answer = request.getParameter("answer");
             HttpSession session = request.getSession();
+
+            if (checkIfPlayerNameIsSet(request, response, session)) return;
+
+            if (resetCheck(request, response, session)) return;
+
+            String answer = request.getParameter("answer");
             GameState gameState = gameService.getOrCreateGameState(session);
-
             gameService.navigateGame(gameState, answer);
+            GameStep currentStep = gameLogicService.getStep(gameState.getCurrentStep());
+            setGameStepAttributes(request, currentStep);
 
-            response.sendRedirect(GAME);
+            request.getRequestDispatcher(GAME_JSP).forward(request, response);
         } catch (Exception e) {
             log.error("Error in GameServlet doPost", e);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while" +
@@ -67,9 +72,24 @@ public class GameServlet extends HttpServlet {
         }
     }
 
-    private static void setGameStepAttributes(HttpServletRequest request, GameStep stepData) {
-        request.setAttribute("question", stepData.getQuestion());
-        request.setAttribute("options", stepData.getOptions());
-        request.setAttribute("end", stepData.getEnd());
+    private boolean resetCheck(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+        String reset = request.getParameter("reset");
+        if ("true".equals(reset)) {
+            GameState gameState = gameService.getOrCreateGameState(session);
+            gameState.reset();
+            response.sendRedirect(request.getContextPath() + GAME);
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean checkIfPlayerNameIsSet(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+        return !PlayerUtils.ensurePlayerName(request, response, session);
+    }
+
+    private static void setGameStepAttributes(HttpServletRequest request, GameStep currentStep) {
+        request.setAttribute("question", currentStep.getQuestion());
+        request.setAttribute("options", currentStep.getOptions());
+        if (currentStep.getEnd() != null) request.setAttribute("end", currentStep.getEnd());
     }
 }

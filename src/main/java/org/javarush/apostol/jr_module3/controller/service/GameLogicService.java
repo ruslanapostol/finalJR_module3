@@ -17,7 +17,6 @@ public class GameLogicService {
     @Getter
     private static final GameLogicService instance = new GameLogicService();
     private Map<String, GameStep> steps;
-    private Map<String, Map<String, String>> options;
 
     private GameLogicService() {
         loadGameLogic();
@@ -25,13 +24,17 @@ public class GameLogicService {
 
     private void loadGameLogic() {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("game_logic.json")) {
+            if (input == null) {
+                log.error("game_logic.json not found");
+                throw new GameException("game_logic.json not found");
+            }
+
             ObjectMapper mapper = new ObjectMapper();
             JsonNode rootNode = mapper.readTree(input);
+            steps = mapper.convertValue(rootNode.get("steps"), new TypeReference<>() {});
 
-            steps = mapper.convertValue(rootNode.get("steps"), new TypeReference<>() {
-            });
-            options = mapper.convertValue(rootNode.get("options"), new TypeReference<>() {
-            });
+            log.info("Game logic loaded successfully");
+            log.debug("Steps: {}", steps);
         } catch (IOException e) {
             log.error("Unable to load game logic", e);
             throw new GameException("Unable to load game logic");
@@ -39,12 +42,18 @@ public class GameLogicService {
     }
 
     public GameStep getStep(String stepId) {
-        return steps.get(stepId);
+        log.debug("Getting step for ID: {}", stepId);
+        GameStep step = steps.get(stepId);
+        if (step == null) {
+            log.error("Step not found for ID: {}", stepId);
+        }
+        return step;
     }
 
     public Map<String, String> getOptions(String stepId) {
-        return options.get(stepId);
+        log.debug("Getting options for step ID: {}", stepId);
+        GameStep step = steps.get(stepId);
+        return (step != null) ? step.getOptions() : null;
     }
-
 }
 

@@ -2,25 +2,37 @@
   "steps": {
     "start": {
       "question": "Ты потерял память. Принять вызов НЛО?",
-      "options": ["acceptChallenge", "declineChallenge"]
+      "options": {
+        "Принять вызов": "acceptChallenge",
+        "Отклонить вызов": "declineChallenge"
+      }
     },
     "acceptChallenge": {
       "question": "Ты принял вызов. Поднимешься на мостик к капитану?",
-      "options": ["goToBridge", "refuseBridge"]
+      "options": {
+        "Подняться на мостик": "goToBridge",
+        "Отказаться подниматься на мостик": "refuseBridge"
+      }
     },
     "declineChallenge": {
       "end": "Ты отклонил вызов. Поражение."
     },
     "goToBridge": {
       "question": "Ты поднялся на мостик. Ты кто?",
-      "options": ["tellTruth", "lieAboutSelf"]
+      "options": {
+        "Рассказать правду о себе": "tellTruth",
+        "Солгать о себе": "lieAboutSelf"
+      }
     },
     "refuseBridge": {
       "end": "Ты не пошел на переговоры. Поражение."
     },
     "tellTruth": {
       "question": "Тебя вернули домой. Но что дальше?",
-      "options": ["rememberPast", "startNewLife"]
+      "options": {
+        "Попытаться вспомнить прошлое": "rememberPast",
+        "Начать новую жизнь": "startNewLife"
+      }
     },
     "lieAboutSelf": {
       "end": "Твою ложь разоблачили. Поражение."
@@ -30,24 +42,6 @@
     },
     "startNewLife": {
       "end": "Ты начал новую жизнь, свободную от прошлого. Победа."
-    }
-  },
-  "options": {
-    "start": {
-      "Принять вызов": "acceptChallenge",
-      "Отклонить вызов": "declineChallenge"
-    },
-    "acceptChallenge": {
-      "Подняться на мостик": "goToBridge",
-      "Отказаться подниматься на мостик": "refuseBridge"
-    },
-    "goToBridge": {
-      "Рассказать правду о себе": "tellTruth",
-      "Солгать о себе": "lieAboutSelf"
-    },
-    "tellTruth": {
-      "Попытаться вспомнить прошлое": "rememberPast",
-      "Начать новую жизнь": "startNewLife"
     }
   }
 }

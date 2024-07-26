@@ -8,7 +8,7 @@ import java.util.Map;
 @Getter
 @Log4j2
 public class GameValidator {
-    private static GameValidator instance = new GameValidator();
+    private static GameValidator instance;
 
     private GameValidator() {}
 

@@ -1,6 +1,5 @@
 package org.javarush.apostol.jr_module3.controller.servlet;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,8 +11,9 @@ import static org.javarush.apostol.jr_module3.util.WebConstants.*;
 @Log4j2
 @WebServlet(DELETE_GAME)
 public class DeleteGameServlet extends HttpServlet {
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.getSession().removeAttribute(GAME_STATE);
         resp.sendRedirect(GAME);
     }

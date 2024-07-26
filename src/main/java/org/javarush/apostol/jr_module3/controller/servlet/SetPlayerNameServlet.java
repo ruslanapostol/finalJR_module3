@@ -21,6 +21,4 @@ public class SetPlayerNameServlet extends HttpServlet {
         request.getSession().setAttribute(PLAYER_NAME, playerName);
         response.sendRedirect(request.getContextPath() + GAME);
     }
-
-
 }
