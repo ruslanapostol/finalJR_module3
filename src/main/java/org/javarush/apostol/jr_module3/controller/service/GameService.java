@@ -16,13 +16,14 @@ import static org.javarush.apostol.jr_module3.util.WebConstants.GAME_STATE;
 public class GameService {
 
     @Getter
-    private static final GameService instance = new GameService();
+    private static final GameService instance = new GameService(GameLogicService.getInstance(),
+            GameValidator.getInstance());
     private final GameLogicService gameLogicService;
-    private static GameValidator gameValidator;
+    private final GameValidator gameValidator;
 
-    private GameService() {
-        gameLogicService = GameLogicService.getInstance();
-        gameValidator = GameValidator.getInstance();
+     GameService(GameLogicService gameLogicService, GameValidator gameValidator) {
+       this.gameLogicService = gameLogicService;
+       this.gameValidator = gameValidator;
     }
 
     public GameState getOrCreateGameState(HttpSession session) {
@@ -54,7 +55,7 @@ public class GameService {
                 );
     }
 
-    private void updateGameState(GameState gameState, String nextStep) {
+    protected void updateGameState(GameState gameState, String nextStep) {
         log.debug("Updating game state to next step: {}", nextStep);
         GameStep nextGameStep = gameLogicService.getStep(nextStep);
         if (nextGameStep == null) {
