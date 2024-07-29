@@ -32,8 +32,8 @@ public class GameServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
             IOException {
-        try {
             HttpSession session = request.getSession();
+        try {
 
             if (checkIfPlayerNameIsSet(request, response, session)) return;
 

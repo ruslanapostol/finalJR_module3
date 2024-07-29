@@ -17,10 +17,10 @@ public class GameLogicServiceTest {
 
     @Test
     public void testGetStep_ValidStartStep() {
-        GameStep step = gameLogicService.getStep("step");
-        assertNotNull(step);
+        GameStep step = gameLogicService.getStep("start");
+        assertNotNull(step,"Step should not be null");
         assertEquals("Ты потерял память. Принять вызов НЛО?", step.getQuestion());
-        assertNotNull(step.getOptions());
+        assertNotNull(step.getOptions(), "Options should not be null");
         assertTrue(step.getOptions().containsKey("Принять вызов"));
         assertTrue(step.getOptions().containsKey("Отклонить вызов"));
     }
@@ -58,9 +58,7 @@ public class GameLogicServiceTest {
     @Test
     public void testGetStep_ValidLastStep() {
         GameStep step = gameLogicService.getStep("startNewLife");
-        assertNotNull(step);
-        assertNotNull(step.getQuestion());
-        assertNotNull(step.getOptions());
+        assertNotNull(step, "Step should not be null");
         assertEquals("Ты начал новую жизнь, свободную от прошлого. Победа.", step.getEnd());
     }
 

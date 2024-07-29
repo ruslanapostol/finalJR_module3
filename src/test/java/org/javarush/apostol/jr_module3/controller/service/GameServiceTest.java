@@ -3,9 +3,8 @@ package org.javarush.apostol.jr_module3.controller.service;
 import jakarta.servlet.http.HttpSession;
 import org.javarush.apostol.jr_module3.controller.validator.GameValidator;
 import org.javarush.apostol.jr_module3.model.GameState;
-
+import static org.javarush.apostol.jr_module3.util.WebConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.javarush.apostol.jr_module3.model.GameStep;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,10 +31,10 @@ public class GameServiceTest {
 
     @Test
     void getOrCreateGameState_NewSession() {
-        when(session.getAttribute("gameState")).thenReturn(null);
+        when(session.getAttribute(GAME_STATE)).thenReturn(null);
         GameState gameState = gameService.getOrCreateGameState(session);
         assertNotNull(gameState);
-        verify(session).setAttribute("gameState", gameState);
+        verify(session).setAttribute(GAME_STATE, gameState);
     }
 
     @Test
